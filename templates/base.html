@@ -12,8 +12,8 @@
   <div class="container-fluid">
     <a href="{% url 'home' %}" class="navbar-brand">PyShop</a>
       <a style="text-decoration: none;" href="{% url 'product-create' %}">&plus;</a>
-    <form class="d-flex">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <form method="get" action="{% url 'search' %}" class="d-flex">
+      <input name="q" class="form-control me-2" type="search" placeholder="Hello World!" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>

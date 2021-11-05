@@ -39,6 +39,10 @@ class Product(models.Model):
                                  on_delete=models.CASCADE,
                                  related_name='products')
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('detail', kwargs={'product_id': self.pk})
+
 
     def __str__(self):
         return self.name
