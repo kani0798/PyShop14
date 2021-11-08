@@ -5,7 +5,13 @@ from django.core.mail import send_mail
 
 def send_welcome_email(email):
     message = f'Спасибо за регистрацию на нашем сайте PyShop14!'
-    send_mail()
+    send_mail(
+        'PyShop14 Welcome!',
+        message,
+        'pyshopadmin@gmail.com',
+        [email],
+        fail_silently=False
+    )
 
 
 class RegistrationForm(forms.ModelForm):
@@ -36,5 +42,7 @@ class RegistrationForm(forms.ModelForm):
         return data
 
     def save(self, commit=True):
-        pass
+        user = User.objects.create(**self.cleaned_data)
+        send_welcome_email(user.email)
+        return user
 
