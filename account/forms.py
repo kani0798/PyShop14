@@ -42,7 +42,7 @@ class RegistrationForm(forms.ModelForm):
         return data
 
     def save(self, commit=True):
-        user = User.objects.create(**self.cleaned_data)
+        user = User.objects.create_user(**self.cleaned_data)
         send_welcome_email(user.email)
         return user
 
