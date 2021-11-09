@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,6 +24,12 @@
         <a href="{% url 'logout' %}">Logout</a>
       {% endif %}
       <!-- End authentication -->
+
+      <!-- Cart icon -->
+      <a href="{% url 'cart_detail' %}">
+        <img style="width: 30px; height: auto;" src="{% static 'img/cart-plus-solid.svg' %}">
+      </a>
+
       <!-- Search -->
     <form method="get" action="{% url 'search' %}" class="d-flex">
       <input name="q" class="form-control me-2" type="search" placeholder="Hello World!" aria-label="Search">

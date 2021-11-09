@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.views.generic import (ListView, DetailView,
                                   CreateView, UpdateView,
                                   DeleteView)
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from .forms import CreateProductForm, UpdateProductForm
 from .models import Category, Product
@@ -52,7 +53,12 @@ class ProductDetailView(DetailView):
     pk_url_kwarg = 'product_id'
 
 
-class ProductCreateView(CreateView):
+class IsAdminCheckMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_superuser
+
+
+class ProductCreateView(IsAdminCheckMixin, CreateView):
     model = Product
     template_name = 'create_product.html'
     form_class = CreateProductForm
@@ -64,7 +70,7 @@ class ProductCreateView(CreateView):
         return context
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(IsAdminCheckMixin, UpdateView):
     model = Product
     template_name = 'update_product.html'
     form_class = UpdateProductForm
@@ -75,7 +81,7 @@ class ProductUpdateView(UpdateView):
         context['product_form'] = self.get_form(self.get_form_class())
         return context
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(IsAdminCheckMixin, DeleteView):
     model = Product
     template_name = 'delete_product.html'
     pk_url_kwarg = 'product_id'
